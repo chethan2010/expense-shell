@@ -40,7 +40,7 @@ fi
    mysql -h db.daws93s.online -uroot  -p${mysql_root_password} -e 'SHOW DATABASES;' &&>>LOGFILE
    if [ $? -ne 0 ]
    then
-        mysql_secure_installation --set-root-pass ${read -s mysql_root_password} &>>LOGFILE
+        mysql_secure_installation --set-root-pass ${mysql_root_password} &>>LOGFILE
         VALIDATE $? "Mysql Root password setup"
    else 
         echo -e "MYSQL Root password is already setup ...$Y Skipping $N"
