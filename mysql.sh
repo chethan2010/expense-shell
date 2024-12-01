@@ -7,7 +7,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
+echo "please enter Db passward"
+read -s mysql_root_password
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
@@ -36,13 +37,13 @@ fi
 
 #    mysql_secure_installation --set-root-pass ExpenseApp@1
 #    VALIDATE $? "Setting up root password"
-
-   mysqlSQL -h db.daws93s.online -uroot  -pExpenseApp@1 -e 'SHOW DATABASES;'
+   mysqlSQL -h db.daws93s.online -uroot  -p${mysql_root_password} -e 'SHOW DATABASES;' &&>>LOGFILE
    if [ $? -ne 0 ]
    then
-        mysql_secure_installation --set-root-pass ExpenseApp@1
-   else
-        echo -e "MYSQL root password is already setup $Y ...Skipping $N"
+        mysql_secure_installation --set-root-pass ${read -s mysql_root_password} &>>LOGFILE
+        VALIDATE $? "Mysql Root password setup"
+   else 
+        echo -e "MYSQL Root password is already setup ...$Y Skipping $N"
 
    fi
 
