@@ -37,7 +37,7 @@ fi
 
 #    mysql_secure_installation --set-root-pass ExpenseApp@1
 #    VALIDATE $? "Setting up root password"
-   mysql -h db.daws93s.online -uroot  -p${mysql_root_password} -e 'SHOW DATABASES;' &&>>LOGFILE
+   mysql -h db.daws93.online -uroot  -p${mysql_root_password} -e 'SHOW DATABASES;' &&>>LOGFILE
    if [ $? -ne 0 ]
    then
         mysql_secure_installation --set-root-pass ${mysql_root_password} &>>LOGFILE
