@@ -34,5 +34,16 @@ fi
    systemctl start mysqld
    VALIDATE $? "Starting Mysql Server" 
 
-   mysql_secure_installation --set-root-pass ExpenseApp@1
-   VALIDATE $? "Setting up root password"
+#    mysql_secure_installation --set-root-pass ExpenseApp@1
+#    VALIDATE $? "Setting up root password"
+
+   mysqlSQL -h db.daws93s.online -uroot  -pExpenseApp@1 -e 'SHOW DATABASES;'
+   if [ $? -ne 0 ]
+   then
+        mysql_secure_installation --set-root-pass ExpenseApp@1
+   else
+        echo -e "MYSQL root password is already setup $Y ...Skipping $N"
+
+   fi
+
+
