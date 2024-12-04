@@ -7,7 +7,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-read -s mysql-root-passward
+read -s mysql_root_password
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -68,7 +68,7 @@ systemctl enable backend
 dnf install mysql -y &>>$LOGFILE
 VALIDATE $? "Installing Mysql client"
 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -p${mysql-root-passward} < /app/schema/backend.sql &>>$LOGFILE
+mysql -h db.daws93.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
 VALIDATE $? "Schema is loading"
 
 systemctl restart backend &>>$LOGFILE
