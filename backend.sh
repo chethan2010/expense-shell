@@ -42,18 +42,18 @@ then
     VALIDATE $? "Creating User Expense"
    
 else    
-    echo "User already Created "
+    echo -e "Expense User already Created....$Y SKIPPING $N "
 fi
 
 mkdir -p /app &>>$LOGFILE
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip  &>>$LOGFILE
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOGFILEzip &>>$LOGFILE
+VALIDATE $? "Download backend code"
 
 cd /app
 unzip /tmp/backend.zip &>>$LOGFILE
 VALIDATE $? "Extracted backend code"
-
 
 npm install &>>$LOGFILE
 VALIDATE $? "Installing nodejs dependencies"
@@ -62,8 +62,10 @@ cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.serv
 VALIDATE $? "copied backend service"
 
 systemctl start backend &>>$LOGFILE
-VALIDATE $? "starting and enabling backend"
+VALIDATE $? "starting backend"
+
 systemctl enable backend 
+VALIDATE $? "enabling backend"
 
 dnf install mysql -y &>>$LOGFILE
 VALIDATE $? "Installing Mysql client"
